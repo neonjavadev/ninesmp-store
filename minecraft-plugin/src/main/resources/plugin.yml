@@ -1,0 +1,19 @@
+name: RankDelivery
+version: '1.0.0'
+main: fun.ninemc.rankdelivery.RankDeliveryPlugin
+api-version: '1.20'
+author: NineSMP
+description: Automatic rank delivery system
+website: https://ninemc.fun
+
+commands:
+  rankdelivery:
+    description: Rank delivery plugin commands
+    usage: /rankdelivery <reload|status>
+    permission: rankdelivery.admin
+    aliases: [rd]
+
+permissions:
+  rankdelivery.admin:
+    description: Admin access to rank delivery plugin
+    default: op

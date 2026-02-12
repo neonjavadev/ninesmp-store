@@ -1,0 +1,57 @@
+# NineSMP Rank Delivery Plugin Configuration
+
+# Backend API Settings
+api:
+  # Base URL of your backend API
+  url: "https://your-backend-url.com"
+  # API key for authentication (must match PLUGIN_API_KEY in backend .env)
+  key: "ninesmp-plugin-key-change-this"
+
+# Polling Settings
+polling:
+  # How often to check for pending deliveries (in seconds)
+  interval: 60
+  # Enable/disable automatic polling
+  enabled: true
+
+# Command Mappings
+# Map package names to Minecraft commands
+# Use {username} as placeholder for player name
+# Use {platform} for platform (java/bedrock)
+commands:
+  VIP:
+    - "lp user {username} parent add vip"
+    - "give {username} diamond 64"
+  MVP:
+    - "lp user {username} parent add mvp"
+    - "give {username} diamond 128"
+  STAR:
+    - "lp user {username} parent add star"
+    - "give {username} diamond 256"
+  GOD:
+    - "lp user {username} parent add god"
+    - "give {username} netherite_ingot 64"
+  EPIC_KEY:
+    - "crate give {username} epic 1"
+  MYTHIC_KEY:
+    - "crate give {username} mythic 1"
+  AMYTHEST_KEY_S:
+    - "crate give {username} amythest 1"
+  ELITE_KEY:
+    - "crate give {username} elite 1"
+  SPAWNER_KEY:
+    - "crate give {username} spawner 1"
+  AMYTHEST_KEY_L:
+    - "crate give {username} amythest_ls 1"
+  PRIME_KEY:
+    - "crate give {username} prime 1"
+
+# Retry Settings
+retry:
+  # Maximum number of retry attempts for failed API calls
+  max-attempts: 3
+  # Delay between retries (in seconds)
+  delay: 30
+
+# Debug Mode
+debug: false
