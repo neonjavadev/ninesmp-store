@@ -86,7 +86,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`
 ╔════════════════════════════════════════╗
 ║   🎮 NineSMP Rank Delivery API   🎮   ║
