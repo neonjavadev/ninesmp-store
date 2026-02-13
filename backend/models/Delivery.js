@@ -17,6 +17,14 @@ const deliverySchema = new mongoose.Schema({
         enum: ['survival', 'lifesteal'],
         default: 'survival', // Default for backward compatibility
     },
+    createdBy: {
+        type: String,
+        description: 'Username of the admin/moderator who issued this'
+    },
+    adminRole: {
+        type: String,
+        enum: ['admin', 'moderator'],
+    },
     package: {
         type: String,
         required: true,

@@ -8,20 +8,26 @@ const router = express.Router();
  * Admin login endpoint
  */
 router.post('/login', (req, res) => {
-    const { password } = req.body;
+    const { username, password } = req.body;
 
-    if (!password) {
-        return res.status(400).json({ error: 'Password is required' });
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
     }
 
+    let role = null;
+
     // Verify password
-    if (password !== process.env.ADMIN_PASSWORD) {
+    if (password === process.env.ADMIN_PASSWORD) {
+        role = 'admin';
+    } else if (password === 'ninesmpmod2026') {
+        role = 'moderator';
+    } else {
         return res.status(401).json({ error: 'Invalid password' });
     }
 
     // Generate JWT token
     const token = jwt.sign(
-        { role: 'admin', timestamp: Date.now() },
+        { username, role, timestamp: Date.now() },
         process.env.JWT_SECRET,
         { expiresIn: '24h' }
     );
@@ -29,6 +35,8 @@ router.post('/login', (req, res) => {
     res.json({
         success: true,
         token,
+        username,
+        role,
         message: 'Login successful',
     });
 });

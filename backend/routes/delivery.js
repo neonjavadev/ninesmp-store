@@ -43,6 +43,8 @@ router.post('/create', verifyAdmin, async (req, res) => {
             package: packageName,
             commands: pkg.commands,
             status: 'pending',
+            createdBy: req.admin?.username || 'Unknown',
+            adminRole: req.admin?.role || 'admin',
         });
 
         await delivery.save();

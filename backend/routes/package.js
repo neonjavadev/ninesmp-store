@@ -25,8 +25,13 @@ router.post('/create', verifyAdmin, async (req, res) => {
     try {
         const { name, server, commands } = req.body;
 
-        if (!name || !server || !commands || !Array.isArray(commands)) {
-            return res.status(400).json({ error: 'Missing required fields' });
+        if (!name || !server || !commands || !Array.isArray(commands) || commands.length === 0) {
+            return res.status(400).json({ error: 'Missing required fields. At least one command is required.' });
+        }
+
+        const trimmedName = name.trim();
+        if (!trimmedName) {
+            return res.status(400).json({ error: 'Package name cannot be empty' });
         }
 
         const pkg = new Package({ name, server, commands });
