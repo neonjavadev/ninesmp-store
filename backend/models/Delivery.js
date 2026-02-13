@@ -11,6 +11,12 @@ const deliverySchema = new mongoose.Schema({
         required: true,
         enum: ['java', 'bedrock'],
     },
+    server: {
+        type: String,
+        required: true,
+        enum: ['survival', 'lifesteal'],
+        default: 'survival', // Default for backward compatibility
+    },
     package: {
         type: String,
         required: true,
@@ -20,6 +26,10 @@ const deliverySchema = new mongoose.Schema({
         required: true,
         enum: ['pending', 'completed', 'failed'],
         default: 'pending',
+    },
+    commands: {
+        type: [String],
+        default: [],
     },
     createdAt: {
         type: Date,

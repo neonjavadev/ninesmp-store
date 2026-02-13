@@ -5,6 +5,7 @@ import connectDB from './config/database.js';
 import authRoutes from './routes/auth.js';
 import deliveryRoutes from './routes/delivery.js';
 import pluginRoutes from './routes/plugin.js';
+import packageRoutes from './routes/package.js';
 
 // Load environment variables
 dotenv.config();
@@ -52,6 +53,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/delivery', deliveryRoutes);
 app.use('/api/plugin', pluginRoutes);
+app.use('/api/package', packageRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {

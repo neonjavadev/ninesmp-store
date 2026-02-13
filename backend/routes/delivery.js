@@ -1,5 +1,6 @@
 import express from 'express';
 import Delivery from '../models/Delivery.js';
+import Package from '../models/Package.js';
 import { sendDeliveryNotification } from '../services/discord.js';
 import { verifyAdmin } from './auth.js';
 
@@ -11,12 +12,12 @@ const router = express.Router();
  */
 router.post('/create', verifyAdmin, async (req, res) => {
     try {
-        const { username, platform, package: packageName } = req.body;
+        const { username, platform, package: packageName, server } = req.body;
 
         // Validation
-        if (!username || !platform || !packageName) {
+        if (!username || !platform || !packageName || !server) {
             return res.status(400).json({
-                error: 'Missing required fields: username, platform, package',
+                error: 'Missing required fields: username, platform, package, server',
             });
         }
 
@@ -26,11 +27,21 @@ router.post('/create', verifyAdmin, async (req, res) => {
             });
         }
 
+        // Fetch package commands
+        const pkg = await Package.findOne({ name: packageName, server: server });
+        if (!pkg) {
+            return res.status(404).json({
+                error: `Package "${packageName}" not found for server "${server}"`,
+            });
+        }
+
         // Create delivery
         const delivery = new Delivery({
             username,
             platform,
+            server,
             package: packageName,
+            commands: pkg.commands,
             status: 'pending',
         });
 

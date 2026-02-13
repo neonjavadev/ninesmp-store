@@ -22,7 +22,15 @@ const verifyPlugin = (req, res, next) => {
  */
 router.get('/pending', verifyPlugin, async (req, res) => {
     try {
-        const pendingDeliveries = await Delivery.find({ status: 'pending' })
+        const { server } = req.query;
+
+        // Build query
+        const query = { status: 'pending' };
+        if (server) {
+            query.server = server;
+        }
+
+        const pendingDeliveries = await Delivery.find(query)
             .sort({ createdAt: 1 }) // Oldest first
             .limit(10); // Process max 10 at a time
 
@@ -31,6 +39,7 @@ router.get('/pending', verifyPlugin, async (req, res) => {
             username: delivery.username,
             platform: delivery.platform,
             package: delivery.package,
+            commands: delivery.commands,
             createdAt: delivery.createdAt,
         }));
 
